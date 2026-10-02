@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="referrer" content="no-referrer">
+<title>Finish connecting | JT Books</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top"><div class="bar">
+  <a class="brand" href="index.html">JT Reliable Solutions<small>JT Books · QuickBooks connection</small></a>
+</div></header>
+
+<main class="doc">
+<div id="ok" hidden>
+  <p class="status ok" aria-hidden="true">&#10004;</p>
+  <h1>Almost done</h1>
+  <p class="lede">QuickBooks approved the connection. One last step for the person running JT Books:</p>
+  <ol>
+    <li>Click <b>Copy</b>.</li>
+    <li>Go back to the JT Books window and paste into the box it shows, then press OK.</li>
+  </ol>
+  <textarea id="u" readonly aria-label="Connection link to paste into JT Books"></textarea>
+  <p><button class="btn" id="copy" type="button">Copy</button> <span id="copied" class="meta"></span></p>
+  <p class="meta">This link works once and expires in a few minutes. It is useless without JT's private app keys, and this page does not send it anywhere.</p>
+</div>
+<div id="bad" hidden>
+  <p class="status err" aria-hidden="true">&#9888;</p>
+  <h1>The connection was not completed</h1>
+  <p class="lede" id="why"></p>
+  <p>Close this tab and start the connection again from JT Books. Questions: <a href="mailto:jean.tra@jtreliablesolutions.com">jean.tra@jtreliablesolutions.com</a>.</p>
+</div>
+</main>
+<script>
+(function(){
+  var q = new URLSearchParams(location.search);
+  if (q.get("code") && q.get("state")) {
+    document.getElementById("ok").hidden = false;
+    var t = document.getElementById("u"); t.value = location.href;
+    document.getElementById("copy").onclick = function(){
+      t.select();
+      var done = function(){ document.getElementById("copied").textContent = "Copied. Now paste it into JT Books."; };
+      if (navigator.clipboard) navigator.clipboard.writeText(t.value).then(done, function(){ document.execCommand("copy"); done(); });
+      else { document.execCommand("copy"); done(); }
+    };
+  } else {
+    document.getElementById("bad").hidden = false;
+    var e = q.get("error");
+    document.getElementById("why").textContent = e === "access_denied" ? "The connection was cancelled on the QuickBooks page." : (e ? "QuickBooks returned: " + e : "This page was opened without a QuickBooks approval.");
+  }
+})();
+</script>
+</body>
+</html>
