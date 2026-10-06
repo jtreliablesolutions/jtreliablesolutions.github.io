@@ -29,6 +29,8 @@ p,li{max-width:70ch}
 .box{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:18px 20px;margin:18px 0}
 .box.note{background:var(--accent-soft);border-color:transparent}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:24px 0}
+.cards4{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:640px){.cards4{grid-template-columns:1fr}}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:18px}
 .card h3{margin:0 0 6px;font:600 19px/1.25 var(--f-display)}
 .card p{margin:0;color:var(--muted);font-size:15px}
